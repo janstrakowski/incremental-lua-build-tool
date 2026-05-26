@@ -1,1 +1,1 @@
-gcc -o program main.c lua/liblua.a openlibm/libopenlibm.a -g
+gcc -o program program.c lua/liblua.a openlibm/libopenlibm.a -g
