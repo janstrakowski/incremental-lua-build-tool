@@ -27,30 +27,35 @@ git clone https://github.com/janstrakowski/programmatic-linux.git
 cd programmatic-linux
 ```
 
-3. Fetch the git submodules:
+3. Checkout to the correct commit:
+```bash
+git checkout 826a838655a202dc965e7fc8543e99b0c67f5828
+```
+
+4. Fetch the git submodules:
 ```bash
 git submodule update --init --recursive
 ```
 
-4. Compile Lua:
+5. Compile Lua:
 ```bash
 cd lua && make
 cd ..
 ```
 
-5. Compile openlibm:
+6. Compile openlibm:
 ```bash
 cd openlibm
 make
 cd ..
 ```
 
-6. Compile the program:
+7. Compile the program:
 ```bash
 bash compile.sh
 ```
 
-7. Look at the build script:
+8. Look at the build script:
 Open build.lua.
 ```lua
 local function code()
@@ -83,7 +88,7 @@ That function calls "build" which is a *sub-build* of the main build. The subbui
 
 When the function we have talked about has been executed four times, then the program ends and *Programmatic Linux* copies the "out" directory into the cache and from cache copies it again to the destination directory - "pldest" by default (but -d <path> command-line option overrides that default).
 
-8. Look a the directories in the repo:
+9. Look a the directories in the repo:
 When you run the program new ones will be created. Now when you do
 ```bash
 ls .
@@ -91,7 +96,7 @@ ls .
 it looks like that:
 <img width="1100" height="76" alt="image" src="https://github.com/user-attachments/assets/1ca00f6a-7d00-4112-9977-6614bfe9d651" />
 
-9. Run the program:
+10. Run the program:
 ```bash
 ./program
 ```
@@ -101,7 +106,7 @@ It prints on the terminal:
 The program started the main build and in the main build executed four sub-builds. Looking at the durations of each build we can see that
 no. 2 lasted four times longer that no. 3, 4 and 5: that is our cache in action. The first was build from the beginning to the end with our "dirwithhelloworldfile" function and the others has been copied from the cache. The whole build lasted 15ms.
 
-10. See the result:
+11. See the result:
 ```bash
 ls .
 ```
@@ -130,7 +135,7 @@ cat pldest/d1/helloworld.txt
 
 Everything is in its place.
 
-11. See what's inside "plcache"
+12. See what's inside "plcache"
 ```bash
 ls plcache
 ```
@@ -150,7 +155,7 @@ ls plcache/sha256_Tl1GXX7STSoSCE7J0ratLbi5Wb98+jvb3WC9JyJ7fM4=
 
 It is the main build.
 
-12. See what's inside "plworkspace":
+13. See what's inside "plworkspace":
 ```bash
 ls plworkspace
 ```
