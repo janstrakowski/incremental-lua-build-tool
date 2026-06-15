@@ -1,6 +1,7 @@
-# Deterministic Lua Build System (Work in Progress)
+# Incremental Lua Build Tool
+**Status: Work in Progress**
 ## About
-*DLBS* is going to be a one-binary [Lua](https://lua.org) virtual machine running on Linux and Windows that can call coroutines (the "builds") that have their resources restricted only to the explicitly given at the call.
+*ILBT* is going to be a one-binary [Lua](https://lua.org) virtual machine running on Linux and Windows that can call coroutines (the "builds") that have their resources restricted only to the explicitly given at the call.
 The *builds* are cached by their input data so that the computation has only to happen at the first call and the inputs are completely serialisable so that the build can be delegated to a different process or even machine.
 
 ### Applications I can imagine:
