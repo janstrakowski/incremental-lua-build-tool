@@ -1,8 +1,9 @@
 # Incremental Lua Build Tool
 **Status: Work in Progress**
 ## About
-*ILBT* is going to be a one-binary [Lua](https://lua.org) virtual machine running on Linux and Windows that can call coroutines (the "builds") that have their resources restricted only to the explicitly given at the call.
-The *builds* are cached by their input data so that the computation has only to happen at the first call and the inputs are completely serialisable so that the build can be delegated to a different process or even machine.
+*ILBT* is a binary that lets you run [Lua](https://lua.org) code (extremely simple programming language) that can spawn asynchonous tasks running pieces of *Lua* code that have no I/O (they receive an arbitrary *Lua* value one-time as the input, they execute the piece of code and eventually they return an arbitrary *Lua* value as the ouput).
+The input, the code and the output all can be serialised (making it for example possible to send them anywhere).
+*Lua* is a fully-blown programming language so the *ILBT* programming framework can arm the build tasks with any sophisticated feature the running operating system provides (for example running Linux containers).
 
 ### Applications I can imagine:
 - (multi-platform) (distributed) build systems,
