@@ -7,3 +7,6 @@
 [submodule "crypto-algorithms"]
 	path = crypto-algorithms
 	url = https://github.com/B-Con/crypto-algorithms.git
+[submodule "luajit"]
+	path = luajit
+	url = https://luajit.org/git/luajit.git

@@ -1,0 +1,8 @@
+print("hash.lua")
+print("\"abc\"")
+print(tohex(sha256("abc")))
+print("nil")
+print(tohex(sha256(nil)))
+print("{abc = 123, b1 = { a1 = true, b2 = false, b3 = 0.123 }, c = nil}")
+print(tohex(sha256({abc = 123, b1 = { a1 = true, b2 = false, b3 = 0.123 }, c = nil})))
+print("Done.")
