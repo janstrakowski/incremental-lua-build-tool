@@ -2,7 +2,6 @@ program
 pldest
 plworkspace
 plcache
-.zig-cache
 zig-out/
 zig-pkg/
 .zig-cache/
