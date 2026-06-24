@@ -33,8 +33,19 @@ pub fn main(init: std.process.Init) !void {
         return;
     }
     
-    try lua.loadFile(args[1], .binary_text);
+    loadFileOrLuaError(lua, args[1], .binary_text);
     lua.call(.{.args=0, .results=0});
+}
+
+fn loadFileOrLuaError(lua: *Lua, file_name: [:0]const u8, mode: zlua.Mode) void {
+    lua.loadFile(file_name, mode) catch {
+        // The error string (e.g., syntax error) is already at the top of the stack.
+        // Calling Lua's error function will raise it as a proper Lua error.
+        lua.raiseError(); 
+        
+        // lua_error performs a longjmp in C and never returns to this point.
+        unreachable; 
+    };
 }
 
 fn luaPanicHandler(lua: *Lua) !i32 {

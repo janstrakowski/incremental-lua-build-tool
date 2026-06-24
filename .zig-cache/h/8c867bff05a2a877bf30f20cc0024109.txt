@@ -1,5 +1,5 @@
 0
-1183 94344 1782302418186901782 f9d80e9105a430a3a22d5b449d879fa8 0 src/main.zig
+1622 94505 1782309555790319738 5feb6c48d0f34e7d3a348e0e561493af 0 src/main.zig
 571 93256 1782254817418245602 4886c110641a6a8deabc8201cbace641 0 src/root.zig
 230440 94353 1782254817562245704 97d2b64b98c99a971abefa02cf056e1c 0 zig-pkg/zlua-0.1.0-hGRpCwGVBQCZRZ2QEHLENoYjRj-nNjD500_BmMsXeqT4/src/lib.zig
 21780 90682 1776106215000000000 8372996c7671543c238bcba94bfb7378 1 ubsan_rt.zig
@@ -820,10 +820,10 @@
 419 90501 1776106215000000000 ed7dfc04a5d0c4f0853edb5414ce981e 1 std/os/linux/bpf/btf_ext.zig
 24525 90502 1776106215000000000 52c7fac6ad48da05270f91f073a4af79 1 std/os/linux/bpf/helpers.zig
 2972 90250 1776106215000000000 8c37c40098d399e3b36a078ce1d4e3a1 1 std/crypto/codecs/asn1/der/ArrayListReverse.zig
-1183 94344 1782302418186901782 f9d80e9105a430a3a22d5b449d879fa8 0 /home/jan/incremental-lua-build-tool/src/main.zig
+1622 94505 1782309555790319738 5feb6c48d0f34e7d3a348e0e561493af 0 /home/jan/incremental-lua-build-tool/src/main.zig
 230440 94353 1782254817562245704 97d2b64b98c99a971abefa02cf056e1c 0 /home/jan/incremental-lua-build-tool/zig-pkg/zlua-0.1.0-hGRpCwGVBQCZRZ2QEHLENoYjRj-nNjD500_BmMsXeqT4/src/lib.zig
 571 93256 1782254817418245602 4886c110641a6a8deabc8201cbace641 0 /home/jan/incremental-lua-build-tool/src/root.zig
-3818 93261 1782302339450906798 d2cd74205bf21e579596fac7e98c60f4 0 /home/jan/incremental-lua-build-tool/src/luabase.zig
+3764 94500 1782308374542485631 e4c12b018f1fbedf5bb13c24a5a9f39a 0 /home/jan/incremental-lua-build-tool/src/luabase.zig
 5219 94352 1782254817562245704 1e809cdd2a46b8682b47d001fd692950 0 /home/jan/incremental-lua-build-tool/zig-pkg/zlua-0.1.0-hGRpCwGVBQCZRZ2QEHLENoYjRj-nNjD500_BmMsXeqT4/src/define.zig
 8078 93511 1782254817550245695 6a5228c368c6a0dea7c7ebc8c6642f10 0 /home/jan/incremental-lua-build-tool/zig-pkg/translate_c-0.0.0-Q_BUWpf0BgAwrh5AM-acJcslN_YPEhcoCVKbbNjwuUTJ/lib/c_builtins.zig
 16226 93512 1782254817550245695 a6f32c79c81a62077a729a6ce0b0e4be 0 /home/jan/incremental-lua-build-tool/zig-pkg/translate_c-0.0.0-Q_BUWpf0BgAwrh5AM-acJcslN_YPEhcoCVKbbNjwuUTJ/lib/helpers.zig

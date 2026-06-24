@@ -18,8 +18,6 @@ pub fn register(lua: *Lua) void {
 
 // --- Internal Helper Methods & Structs ---
 
-const nil_sha256 = [_]u8{0} ** Sha256.digest_length;
-
 fn hashDumpCallback(L: ?*zlua.LuaState, item: ?*const anyopaque, size: usize, ud: ?*anyopaque) callconv(.c) c_int {
     _ = L;
     if (item == null) return 0;
