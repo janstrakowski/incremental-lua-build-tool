@@ -167,60 +167,9 @@ pub fn build(b: *std.Build) void {
     test_step.dependOn(&run_exe_tests.step);
 
     // --- INTEGRATION TESTS ---
-
-    const expected_hash_output = 
-        \\hash.lua
-        \\"abc"
-        \\c8961b21b2ee347d6fae91d71653ab8f3a5b53eb9dea9ce2adc724ddb5096ec5
-        \\nil
-        \\6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d
-        \\{abc = 123, b1 = { a1 = true, b2 = false, b3 = 0.123 }, c = nil}
-        \\9f5dc91750826544ba017d035f4a1b2135be1fee41c19d67cac9126320af5961
-        \\function add(a,b) return a + b end
-        \\f99b1adb071a704e74fb70103075fa408c4e1f82b389cc331482e8cd019ae835
-        \\Done.
-        \\
-        ;
-
-    const hash_integration_test = b.addRunArtifact(exe);
-    hash_integration_test.addFileArg(b.path("tests/hash.lua"));
-    hash_integration_test.expectStdOutEqual(expected_hash_output);
-    test_step.dependOn(&hash_integration_test.step);
-
-    const expected_serialize_output = 
-        \\--- Testing: string ---
-        \\Hex: 040300000000000000616263
-        \\Deser string: abc
-        \\Valid: true
-        \\
-        \\--- Testing: nil ---
-        \\Hex: 00
-        \\Deser nil: nil
-        \\Valid: true
-        \\
-        \\--- Testing: table ---
-        \\Hex: 050402000000000000006231050402000000000000006232010004020000000000000061310101040200000000000000623303b0726891ed7cbf3f00040300000000000000616263030000000000c05e4000
-        \\Deser tbl_deser.abc: 123.0
-        \\Deser tbl_deser.b1.a1: true
-        \\Deser tbl_deser.b1.b2: false
-        \\Deser tbl_deser.b1.b3: 0.123
-        \\Deser tbl_deser.c: nil
-        \\Valid: true
-        \\
-        \\--- Testing: function ---
-        \\Hex: 061f000000000000004074657374732f73657269616c697a65646573657269616c697a652e6c756176000000000000001b4c7561550019930d0a1a0a0488a9ffff04785634120888a9ffffffffffff0800000000002877c00026260200030400220100012e0001064801020047010100000000204074657374732f73657269616c697a65646573657269616c697a652e6c756100040000000000020261000004026200000400
-        \\Deser function execution (10 + 25): 35
-        \\Valid: true
-        \\
-        \\Done.
-        \\
-        ;
-
-    const serialize_integration_test = b.addRunArtifact(exe);
-    serialize_integration_test.addArg("tests/serializedeserialize.lua");
-    serialize_integration_test.expectStdOutEqual(expected_serialize_output);
-    test_step.dependOn(&serialize_integration_test.step);
-
+    addIntegrationTest(b, exe, test_step, "hash");
+    addIntegrationTest(b, exe, test_step, "serializedeserialize");
+    // Just add one line here for any future tests
     // Just like flags, top level steps are also listed in the `--help` menu.
     //
     // The Zig build system is entirely implemented in userland, which means
@@ -234,4 +183,34 @@ pub fn build(b: *std.Build) void {
     //
     // Lastly, the Zig build system is relatively simple and self-contained,
     // and reading its source code will allow you to master it.
+}
+
+fn addIntegrationTest(
+    b: *std.Build, 
+    exe: *std.Build.Step.Compile, 
+    test_step: *std.Build.Step, 
+    test_name: []const u8
+) void {
+    const run_test = b.addRunArtifact(exe);
+    
+    // Pass the Lua script as the argument
+    const script_path = b.fmt("tests/{s}/script.lua", .{test_name});
+    run_test.addArg(script_path);
+    
+    const expected_path = b.fmt("tests/{s}/expected_output.txt", .{test_name});
+    
+    // ZIG 0.16.0 FIX: Extract the I/O instance from the build graph 
+    // and pass it as the first argument to readFileAlloc.
+    const io = b.graph.io; 
+    const expected_output = b.build_root.handle.readFileAlloc(
+        io,
+        expected_path,
+        b.allocator, 
+        .unlimited 
+    ) catch |err| std.debug.panic("Failed to read {s}: {}", .{expected_path, err});
+    
+    run_test.expectStdOutEqual(expected_output);
+    
+    // Add this specific test to the global "test" step
+    test_step.dependOn(&run_test.step);
 }
