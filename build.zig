@@ -157,6 +157,8 @@ pub fn build(b: *std.Build) void {
         \\6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d
         \\{abc = 123, b1 = { a1 = true, b2 = false, b3 = 0.123 }, c = nil}
         \\9f5dc91750826544ba017d035f4a1b2135be1fee41c19d67cac9126320af5961
+        \\function add(a,b) return a + b end
+        \\f99b1adb071a704e74fb70103075fa408c4e1f82b389cc331482e8cd019ae835
         \\Done.
         \\
         ;
