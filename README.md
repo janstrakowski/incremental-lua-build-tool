@@ -44,3 +44,7 @@ nil
 9f5dc91750826544ba017d035f4a1b2135be1fee41c19d67cac9126320af5961
 Done.
 ```
+### Serialization/Deserialization facility
+You can serialize/deserialize arbitrary Lua values. Two functions are provided:
+`serialize(value) -> binary string` and `deserialize(binary string) -> value`.
+Functions are not excempted.
