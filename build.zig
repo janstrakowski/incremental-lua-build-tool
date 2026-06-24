@@ -2,30 +2,37 @@ const std = @import("std");
 
 // Although this function looks imperative, it does not perform the build
 // directly and instead it mutates the build graph (`b`) that will be then
-// executed by an external runner. The functions in `std.Build` implement a DSL
+// executed by an external runner.
+// The functions in `std.Build` implement a DSL
 // for defining build steps and express dependencies between them, allowing the
 // build runner to parallelize the build automatically (and the cache system to
 // know when a step doesn't need to be re-run).
 pub fn build(b: *std.Build) void {
     // Standard target options allow the person running `zig build` to choose
-    // what target to build for. Here we do not override the defaults, which
-    // means any target is allowed, and the default is native. Other options
+    // what target to build for.
+    // Here we do not override the defaults, which
+    // means any target is allowed, and the default is native.
+    // Other options
     // for restricting supported target set are available.
     const target = b.standardTargetOptions(.{});
     // Standard optimization options allow the person running `zig build` to select
-    // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall. Here we do not
+    // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall.
+    // Here we do not
     // set a preferred release mode, allowing the user to decide how to optimize.
     const optimize = b.standardOptimizeOption(.{});
+    
     // It's also possible to define more custom flags to toggle optional features
-    // of this build script using `b.option()`. All defined flags (including
+    // of this build script using `b.option()`.
+    // All defined flags (including
     // target and optimize options) will be listed when running `zig build --help`
     // in this directory.
-
+    
     // This creates a module, which represents a collection of source files alongside
     // some compilation options, such as optimization mode and linked system libraries.
     // Zig modules are the preferred way of making Zig code available to consumers.
     // addModule defines a module that we intend to make available for importing
-    // to our consumers. We must give it a name because a Zig package can expose
+    // to our consumers.
+    // We must give it a name because a Zig package can expose
     // multiple modules and consumers will need to be able to specify which
     // module they want to access.
     const mod = b.addModule("incremental_lua_build_tool", .{
@@ -33,21 +40,24 @@ pub fn build(b: *std.Build) void {
         // this module will only be able to access public declarations contained
         // in this file, which means that if you have declarations that you
         // intend to expose to consumers that were defined in other files part
-        // of this module, you will have to make sure to re-export them from
+        // of this module, you will have to 
+        // make sure to re-export them from
         // the root file.
         .root_source_file = b.path("src/root.zig"),
         // Later on we'll use this module as the root module of a test executable
         // which requires us to specify a target.
         .target = target,
     });
-
+    
     // Here we define an executable. An executable needs to have a root module
-    // which needs to expose a `main` function. While we could add a main function
+    // which needs to expose a `main` function.
+    // While we could add a main function
     // to the module defined above, it's sometimes preferable to split business
     // logic and the CLI into two separate modules.
     //
     // If your goal is to create a Zig library for others to use, consider if
-    // it might benefit from also exposing a CLI tool. A parser library for a
+    // it might benefit from also exposing a CLI tool.
+    // A parser library for a
     // data serialization format could also bundle a CLI syntax checker, for example.
     //
     // If instead your goal is to create an executable, consider if users might
@@ -73,8 +83,10 @@ pub fn build(b: *std.Build) void {
             // List of modules available for import in source files part of the
             // root module.
             .imports = &.{
-                // Here "incremental_lua_build_tool" is the name you will use in your source code to
-                // import this module (e.g. `@import("incremental_lua_build_tool")`). The name is
+                // Here "incremental_lua_build_tool" is the name you 
+                // will use in your source code to
+                // import this module (e.g.
+                // `@import("incremental_lua_build_tool")`). The name is
                 // repeated because you are allowed to rename your imports, which
                 // can be extremely useful in case of collisions (which can happen
                 // importing modules from different packages).
@@ -82,17 +94,18 @@ pub fn build(b: *std.Build) void {
             },
         }),
     });
-
-     const lua_dep = b.dependency("zlua", .{
+    
+    const lua_dep = b.dependency("zlua", .{
         .target = target,
         .optimize = optimize,
     });
-
-     exe.root_module.addImport("zlua", lua_dep.module("zlua"));
+    
+    exe.root_module.addImport("zlua", lua_dep.module("zlua"));
 
     // This declares intent for the executable to be installed into the
     // install prefix when running `zig build` (i.e. when executing the default
-    // step). By default the install prefix is `zig-out/` but can be overridden
+    // step).
+    // By default the install prefix is `zig-out/` but can be overridden
     // by passing `--prefix` or `-p`.
     b.installArtifact(exe);
 
@@ -103,11 +116,14 @@ pub fn build(b: *std.Build) void {
     // steps (e.g. a Run step, as we will see in a moment).
     const run_step = b.step("run", "Run the app");
 
-    // This creates a RunArtifact step in the build graph. A RunArtifact step
-    // invokes an executable compiled by Zig. Steps will only be executed by the
+    // This creates a RunArtifact step in the build graph.
+    // A RunArtifact step
+    // invokes an executable compiled by Zig.
+    // Steps will only be executed by the
     // runner if invoked directly by the user (in the case of top level steps)
     // or if another step depends on it, so it's up to you to define when and
-    // how this Run step will be executed. In our case we want to run it when
+    // how this Run step will be executed.
+    // In our case we want to run it when
     // the user runs `zig build run`, so we create a dependency link.
     const run_cmd = b.addRunArtifact(exe);
     run_step.dependOn(&run_cmd.step);
@@ -128,26 +144,29 @@ pub fn build(b: *std.Build) void {
     const mod_tests = b.addTest(.{
         .root_module = mod,
     });
-
+    
     // A run step that will run the test executable.
     const run_mod_tests = b.addRunArtifact(mod_tests);
-
+    
     // Creates an executable that will run `test` blocks from the executable's
-    // root module. Note that test executables only test one module at a time,
+    // root module.
+    // Note that test executables only test one module at a time,
     // hence why we have to create two separate ones.
     const exe_tests = b.addTest(.{
         .root_module = exe.root_module,
     });
-
+    
     // A run step that will run the second test executable.
     const run_exe_tests = b.addRunArtifact(exe_tests);
-
+    
     // A top level step for running all tests. dependOn can be called multiple
     // times and since the two run steps do not depend on one another, this will
     // make the two of them run in parallel.
     const test_step = b.step("test", "Run tests");
     test_step.dependOn(&run_mod_tests.step);
     test_step.dependOn(&run_exe_tests.step);
+
+    // --- INTEGRATION TESTS ---
 
     const expected_hash_output = 
         \\hash.lua
@@ -168,12 +187,48 @@ pub fn build(b: *std.Build) void {
     hash_integration_test.expectStdOutEqual(expected_hash_output);
     test_step.dependOn(&hash_integration_test.step);
 
+    const expected_serialize_output = 
+        \\--- Testing: string ---
+        \\Hex: 040300000000000000616263
+        \\Deser string: abc
+        \\Valid: true
+        \\
+        \\--- Testing: nil ---
+        \\Hex: 00
+        \\Deser nil: nil
+        \\Valid: true
+        \\
+        \\--- Testing: table ---
+        \\Hex: 050402000000000000006231050402000000000000006232010004020000000000000061310101040200000000000000623303b0726891ed7cbf3f00040300000000000000616263030000000000c05e4000
+        \\Deser tbl_deser.abc: 123.0
+        \\Deser tbl_deser.b1.a1: true
+        \\Deser tbl_deser.b1.b2: false
+        \\Deser tbl_deser.b1.b3: 0.123
+        \\Deser tbl_deser.c: nil
+        \\Valid: true
+        \\
+        \\--- Testing: function ---
+        \\Hex: 061f000000000000004074657374732f73657269616c697a65646573657269616c697a652e6c756176000000000000001b4c7561550019930d0a1a0a0488a9ffff04785634120888a9ffffffffffff0800000000002877c00026260200030400220100012e0001064801020047010100000000204074657374732f73657269616c697a65646573657269616c697a652e6c756100040000000000020261000004026200000400
+        \\Deser function execution (10 + 25): 35
+        \\Valid: true
+        \\
+        \\Done.
+        \\
+        ;
+
+    const serialize_integration_test = b.addRunArtifact(exe);
+    serialize_integration_test.addArg("tests/serializedeserialize.lua");
+    serialize_integration_test.expectStdOutEqual(expected_serialize_output);
+    test_step.dependOn(&serialize_integration_test.step);
+
     // Just like flags, top level steps are also listed in the `--help` menu.
     //
     // The Zig build system is entirely implemented in userland, which means
-    // that it cannot hook into private compiler APIs. All compilation work
+    // that it cannot hook into private compiler APIs.
+    // All compilation work
     // orchestrated by the build system will result in other Zig compiler
-    // subcommands being invoked with the right flags defined. You can observe
+    // subcommands being invoked with the right flags defined.
+    // You can observe
     // these invocations when one fails (or you pass a flag to increase
     // verbosity) to validate assumptions and diagnose problems.
     //

@@ -823,7 +823,7 @@
 1622 94505 1782309555790319738 5feb6c48d0f34e7d3a348e0e561493af 0 /home/jan/incremental-lua-build-tool/src/main.zig
 230440 94353 1782254817562245704 97d2b64b98c99a971abefa02cf056e1c 0 /home/jan/incremental-lua-build-tool/zig-pkg/zlua-0.1.0-hGRpCwGVBQCZRZ2QEHLENoYjRj-nNjD500_BmMsXeqT4/src/lib.zig
 571 93256 1782254817418245602 4886c110641a6a8deabc8201cbace641 0 /home/jan/incremental-lua-build-tool/src/root.zig
-3764 94500 1782308374542485631 e4c12b018f1fbedf5bb13c24a5a9f39a 0 /home/jan/incremental-lua-build-tool/src/luabase.zig
+13409 94524 1782324930492209846 ac7698c16f6282cf6f4e23ea6f7424ed 0 /home/jan/incremental-lua-build-tool/src/luabase.zig
 5219 94352 1782254817562245704 1e809cdd2a46b8682b47d001fd692950 0 /home/jan/incremental-lua-build-tool/zig-pkg/zlua-0.1.0-hGRpCwGVBQCZRZ2QEHLENoYjRj-nNjD500_BmMsXeqT4/src/define.zig
 8078 93511 1782254817550245695 6a5228c368c6a0dea7c7ebc8c6642f10 0 /home/jan/incremental-lua-build-tool/zig-pkg/translate_c-0.0.0-Q_BUWpf0BgAwrh5AM-acJcslN_YPEhcoCVKbbNjwuUTJ/lib/c_builtins.zig
 16226 93512 1782254817550245695 a6f32c79c81a62077a729a6ce0b0e4be 0 /home/jan/incremental-lua-build-tool/zig-pkg/translate_c-0.0.0-Q_BUWpf0BgAwrh5AM-acJcslN_YPEhcoCVKbbNjwuUTJ/lib/helpers.zig
