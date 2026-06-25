@@ -32,5 +32,13 @@ Done.
 You can serialize/deserialize arbitrary Lua values. Two functions are provided:
 `serialize(value) -> binary string` and `deserialize(binary string) -> value`.
 Functions are not excempted.
+### FS/IO libraries
+At the start the host can pass pairs of names and files/directories to the script. The files will became 'file/directory' handles and directory handles are used to retrieved files.
+E.g. 'stat(dir_handle, path) -> table'
+```
+$ binary script.lua --directory=cwd=.
+print(stat(files.cwd, "hello.txt").atime) -- prints last access timestamp in milliseconds
+print(stat(files.cwd, "hello.txt").kind -- prints the type of the file ("file", "directory" or "symlink")
+```
 ## Donate
 If you want to donate, I prefer just a bank transfer ([Bank Details](https://janstrakowski.github.io/jansdonations/)) or you can do via Github Sponsors.
