@@ -48,3 +48,5 @@ Done.
 You can serialize/deserialize arbitrary Lua values. Two functions are provided:
 `serialize(value) -> binary string` and `deserialize(binary string) -> value`.
 Functions are not excempted.
+## Donate
+If you want to donate, I prefer just a bank transfer ([Bank Details](https://janstrakowski.github.io/jansdonations/)) or you can do via Github Sponsors.
