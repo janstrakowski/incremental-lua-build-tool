@@ -169,7 +169,7 @@ pub fn build(b: *std.Build) void {
     // --- INTEGRATION TESTS ---
     addIntegrationTest(b, exe, test_step, "hash", &.{}, &.{});
     addIntegrationTest(b, exe, test_step, "serializedeserialize", &.{}, &.{});
-    addIntegrationTest(b, exe, test_step, "stat", &.{"--dir=abc=tests/stat/handle_abc", "--dir=2=tests/stat/handle_2"}, &.{});
+    addIntegrationTest(b, exe, test_step, "stat", &.{"--dir=abc=tests/stat/handle_abc", "--dir=2=tests/stat/handle_2"}, &.{"abc:hello.txt", "2:hello.txt", "2:data.txt"});
     addIntegrationTest(b, exe, test_step, "args", &.{}, &.{"abc", "123"});
     // Just add one line here for any future tests
     // Just like flags, top level steps are also listed in the `--help` menu.

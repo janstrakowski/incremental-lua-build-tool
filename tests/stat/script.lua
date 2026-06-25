@@ -1,12 +1,13 @@
 -- test_stat.lua
 
 -- Iterate over all handles injected by Zig
-for name, handle in pairs(files) do
-    print("--- Checking handle: " .. name .. " ---")
+for _, arg in ipairs(args) do
+    local handle_name, path = string.match(arg, "([^:]+):([^:]+)")
+    print("--- Checking handle '" .. handle_name .. "' -> '" .. path .. "'.  ---")
     
     -- The stat function is registered in fs.zig 
     -- It requires a directory handle 
-    local success, result = pcall(stat, handle, "hello.txt")
+    local success, result = pcall(stat, files[handle_name], path)
     
     if success then
         print("Kind: " .. result.kind)

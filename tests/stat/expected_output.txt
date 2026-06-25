@@ -1,8 +1,12 @@
---- Checking handle: 2 ---
-Kind: file
-Size: 13.0
-Mtime: 1782407332.1827738
---- Checking handle: abc ---
+--- Checking handle 'abc' -> 'hello.txt'.  ---
 Kind: file
 Size: 12.0
 Mtime: 1782407886.8146973
+--- Checking handle '2' -> 'hello.txt'.  ---
+Kind: file
+Size: 13.0
+Mtime: 1782407332.1827738
+--- Checking handle '2' -> 'data.txt'.  ---
+Kind: file
+Size: 6.0
+Mtime: 1782407347.9187713
