@@ -11,7 +11,6 @@ for name, handle in pairs(files) do
     if success then
         print("Kind: " .. result.kind)
         print("Size: " .. result.size)
-        print("Atime: " .. result.atime)
         print("Mtime: " .. result.mtime)
     else
         print("Stat failed for 'hello.txt' in " .. name .. ": " .. result)

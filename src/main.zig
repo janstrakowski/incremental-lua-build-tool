@@ -54,7 +54,9 @@ pub fn main(init: std.process.Init) !void {
 
     // 4. Parse CLI Options
     var script_path: ?[:0]const u8 = null;
+    var ordinal: u64 = 0;
     for (args[1..]) |arg| {
+        ordinal += 1;
         if (std.mem.startsWith(u8, arg, "--file=")) {
             // Parse `--file=my_handle_name=path/to/file.txt`
             const kv = arg[7..];
@@ -75,16 +77,27 @@ pub fn main(init: std.process.Init) !void {
             } else {
                 std.debug.print("Invalid --dir format. Expected --dir=name=path\n", .{});
             }
+        } else if (std.mem.eql(u8, arg, "--")) {
+            break;
         } else if (script_path == null) {
             script_path = arg;
         }
+    }
+
+    lua.newTable();
+    lua.pushValue(-1);
+    lua.setGlobal("args");
+    var lua_args_push_ordinal: zlua.Integer = 1;
+    for (args[ordinal + 1..]) |arg| {
+        _ = lua.pushString(arg);
+        lua.setIndexRaw(-2, lua_args_push_ordinal);
+        lua_args_push_ordinal += 1;
     }
 
     if (script_path == null) {
         std.debug.print("Usage: {s} [--file=name=path] [--dir=name=path] <script.lua>\n", .{args[0]});
         return;
     }
-    lua.pushValue(1); 
 
     // 5. Execute
     loadFileOrLuaError(lua, script_path.?, .binary_text);
