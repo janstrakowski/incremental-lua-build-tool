@@ -167,8 +167,9 @@ pub fn build(b: *std.Build) void {
     test_step.dependOn(&run_exe_tests.step);
 
     // --- INTEGRATION TESTS ---
-    addIntegrationTest(b, exe, test_step, "hash");
-    addIntegrationTest(b, exe, test_step, "serializedeserialize");
+    addIntegrationTest(b, exe, test_step, "hash", &.{});
+    addIntegrationTest(b, exe, test_step, "serializedeserialize", &.{});
+    addIntegrationTest(b, exe, test_step, "stat", &.{"--dir=abc=tests/stat/handle_abc", "--dir=2=tests/stat/handle_2"});
     // Just add one line here for any future tests
     // Just like flags, top level steps are also listed in the `--help` menu.
     //
@@ -189,10 +190,14 @@ fn addIntegrationTest(
     b: *std.Build, 
     exe: *std.Build.Step.Compile, 
     test_step: *std.Build.Step, 
-    test_name: []const u8
+    test_name: []const u8,
+    binary_args: []const []const u8
 ) void {
     const run_test = b.addRunArtifact(exe);
     
+    for (binary_args) |arg| {
+        run_test.addArg(arg);
+    }
     // Pass the Lua script as the argument
     const script_path = b.fmt("tests/{s}/script.lua", .{test_name});
     run_test.addArg(script_path);
